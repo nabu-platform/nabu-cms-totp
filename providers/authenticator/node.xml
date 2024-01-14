@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<node artifactManager="be.nabu.eai.module.services.vm.VMServiceManager" created="2024-01-14T14:34:12.690+01:00" lastModified="2024-01-14T15:50:16.872+01:00" leaf="true" version="9">
+    <environmentId>apollo</environmentId>
+    <hidden>false</hidden>
+    <locked>false</locked>
+    <properties>
+        <property key="authenticationType">totp</property>
+    </properties>
+    <references>nabu.cms.totp.crud.userTotp.services.list</references>
+    <references>nabu.web.application.Services.current</references>
+    <references>nabu.cms.totp.crud.userTotp.types.output</references>
+    <references>nabu.utils.Date.now</references>
+    <references>be.nabu.eai.authentication.api.TypedAuthenticator.authenticate</references>
+    <references>java.lang.String</references>
+    <references>nabu.utils.Totp.otp</references>
+    <references>be.nabu.libs.authentication.api.Device</references>
+    <references>be.nabu.libs.authentication.api.Token</references>
+    <references>nabu.utils.String.split</references>
+    <references>be.nabu.libs.authentication.api.principals.TypedPrincipal</references>
+    <references>nabu.web.application.Services.temporarilyAuthenticate</references>
+</node>

@@ -1,0 +1,5 @@
+<structure interface="nabu.cms.core.interfaces.contextResolver" name="pipeline">
+    <structure name="input"/>
+    <structure name="output"/>
+    <structure collectionName="userTotps" definition="nabu.cms.totp.crud.userTotp.types.output" name="totp"/>
+</structure>

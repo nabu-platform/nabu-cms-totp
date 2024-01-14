@@ -1,0 +1,261 @@
+<sequence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		disabled="false"
+		id="0363968cfb4d4744b2d02a507d44612b"
+		lineNumber="1">
+	<steps xsi:type="be.nabu.libs.services.vm.step.Map"
+			disabled="false"
+			id="6221246c-eef3-4b77-9656-398f259693e0"
+			lineNumber="2">
+		<steps xsi:type="be.nabu.libs.services.vm.step.Invoke"
+				disabled="false"
+				id="2ddb5b3a-c3ac-45b0-978e-de789f007c8e"
+				serviceId="nabu.web.application.Services.temporarilyAuthenticate"
+				resultName="resultb09b78ec3a14434788391fdb23ca0b93"
+				temporaryMapping="true"
+				x="507"
+				y="142"
+				invocationOrder="1"
+				asynchronous="false"
+				recache="false">
+			<steps xsi:type="be.nabu.libs.services.vm.step.Link"
+					disabled="false"
+					id="9f4f31e7-1dc6-496a-bd2a-c9e5f6823933"
+					mask="false"
+					optional="false"
+					fixedValue="true">
+				<from>challenge</from>
+				<to>type</to>
+			</steps>
+			<steps xsi:type="be.nabu.libs.services.vm.step.Link"
+					disabled="false"
+					id="cdf39a5f-c9a4-43bc-bdce-a23aff475f74"
+					mask="false"
+					optional="false"
+					fixedValue="false">
+				<from>input/device</from>
+				<to>device</to>
+			</steps>
+			<steps xsi:type="be.nabu.libs.services.vm.step.Link"
+					disabled="false"
+					id="2fb1a110-6063-43bc-947a-cd5e397cb1ae"
+					mask="false"
+					optional="false"
+					fixedValue="false">
+				<from>resultf2af51e05f404b698dc7bf4aa05ed914/current/id</from>
+				<to>webApplicationId</to>
+			</steps>
+			<steps xsi:type="be.nabu.libs.services.vm.step.Link"
+					disabled="false"
+					id="84df7a32cfb8471fad2aefebed2640d4"
+					mask="false"
+					optional="false"
+					fixedValue="false">
+				<from>resultaa5a02a3a7fb428081f16eaa353474d0/parts[0]</from>
+				<to>authentication/id</to>
+			</steps>
+			<steps xsi:type="be.nabu.libs.services.vm.step.Link"
+					disabled="false"
+					id="34e1acd8861a4197a82cccc760b1635d"
+					mask="false"
+					optional="false"
+					fixedValue="false">
+				<from>resultaa5a02a3a7fb428081f16eaa353474d0/parts[1]</from>
+				<to>authentication/secret</to>
+			</steps>
+		</steps>
+		<steps xsi:type="be.nabu.libs.services.vm.step.Invoke"
+				disabled="false"
+				id="b3cead2e-cdb3-49a6-9653-c1cfd3ea8c48"
+				serviceId="nabu.web.application.Services.current"
+				resultName="resultf2af51e05f404b698dc7bf4aa05ed914"
+				temporaryMapping="true"
+				x="10"
+				y="313"
+				invocationOrder="0"
+				asynchronous="false"
+				recache="false">
+		</steps>
+		<steps xsi:type="be.nabu.libs.services.vm.step.Invoke"
+				disabled="false"
+				id="a95e2e10f523404ab5945dbec645fa3f"
+				serviceId="nabu.utils.String.split"
+				resultName="resultaa5a02a3a7fb428081f16eaa353474d0"
+				temporaryMapping="true"
+				x="77"
+				y="63"
+				invocationOrder="0"
+				asynchronous="false"
+				recache="false">
+			<steps xsi:type="be.nabu.libs.services.vm.step.Link"
+					disabled="false"
+					id="bb2d5e215c4843d4959a749dfb6ea573"
+					mask="false"
+					optional="false"
+					fixedValue="false">
+				<from>input/credentials/name</from>
+				<to>string</to>
+			</steps>
+			<steps xsi:type="be.nabu.libs.services.vm.step.Link"
+					disabled="false"
+					id="07f86571fe5a45fab478508f0b8364a2"
+					mask="false"
+					optional="false"
+					fixedValue="true">
+				<from>:</from>
+				<to>separator</to>
+			</steps>
+		</steps>
+		<steps xsi:type="be.nabu.libs.services.vm.step.Link"
+				disabled="false"
+				id="54fa07cf376a479da3cefbf232937444"
+				mask="false"
+				optional="false"
+				fixedValue="false">
+			<from>resultb09b78ec3a14434788391fdb23ca0b93/response</from>
+			<to>token</to>
+		</steps>
+	</steps>
+	<steps xsi:type="be.nabu.libs.services.vm.step.Sequence"
+			comment="If we have a valid token, check if the code is also valid"
+			disabled="false"
+			id="dc1254ca555d4389987b4a0341863924"
+			label="token &amp;&amp; token/authenticationId != null"
+			lineNumber="3">
+		<steps xsi:type="be.nabu.libs.services.vm.step.Map"
+				comment="Get max 10 active totp (for sharing an account)"
+				disabled="false"
+				id="923d1c902ff24eaa9e66af1ec7ba39e0"
+				lineNumber="4">
+			<steps xsi:type="be.nabu.libs.services.vm.step.Invoke"
+					disabled="false"
+					id="698471ad948b442d9693d43dacc80097"
+					serviceId="nabu.cms.totp.crud.userTotp.services.list"
+					resultName="result9027931d8eba493ba7ae12bf9fa28978"
+					temporaryMapping="true"
+					x="476"
+					y="80"
+					invocationOrder="1"
+					asynchronous="false"
+					recache="false">
+				<steps xsi:type="be.nabu.libs.services.vm.step.Link"
+						disabled="false"
+						id="5c82359c632e4673a88d665cc03643a9"
+						mask="false"
+						optional="false"
+						fixedValue="false">
+					<from>output/token/authenticationId</from>
+					<to>filter/userId[0]</to>
+				</steps>
+				<steps xsi:type="be.nabu.libs.services.vm.step.Link"
+						disabled="false"
+						id="8b7afb05d02e4403af2d78a26cdc21bd"
+						mask="false"
+						optional="false"
+						fixedValue="false">
+					<from>resulte3e8cdddac8d4772aead9c3bdce143ec/date</from>
+					<to>filter/activeAt</to>
+				</steps>
+				<steps xsi:type="be.nabu.libs.services.vm.step.Link"
+						disabled="false"
+						id="72a5b5946ada4bf595e5f9354e70f3d3"
+						mask="false"
+						optional="false"
+						fixedValue="true">
+					<from>10</from>
+					<to>limit</to>
+				</steps>
+			</steps>
+			<steps xsi:type="be.nabu.libs.services.vm.step.Invoke"
+					disabled="false"
+					id="bd7339040e5840b98a0d96e6e1a2924e"
+					serviceId="nabu.utils.Date.now"
+					resultName="resulte3e8cdddac8d4772aead9c3bdce143ec"
+					temporaryMapping="true"
+					x="105"
+					y="359"
+					invocationOrder="0"
+					asynchronous="false"
+					recache="false">
+			</steps>
+			<steps xsi:type="be.nabu.libs.services.vm.step.Link"
+					disabled="false"
+					id="48db8efacf2143b2a35adf3075ad6658"
+					mask="false"
+					optional="false"
+					fixedValue="false">
+				<from>result9027931d8eba493ba7ae12bf9fa28978/results</from>
+				<to>totps</to>
+			</steps>
+		</steps>
+		<steps xsi:type="be.nabu.libs.services.vm.step.For"
+				disabled="false"
+				id="5571728f69e64a148f58565c985bf04f"
+				lineNumber="5"
+				variable="totp">
+			<steps xsi:type="be.nabu.libs.services.vm.step.Map"
+					disabled="false"
+					id="9a849d47366746b891b8811c49914c28"
+					lineNumber="6">
+				<steps xsi:type="be.nabu.libs.services.vm.step.Invoke"
+						disabled="false"
+						id="dd6d55537ce24070aa8c570fa1ebdbb4"
+						serviceId="nabu.utils.Totp.otp"
+						resultName="result4ee1a62286b8475d90c13cae8ba2b0cc"
+						temporaryMapping="true"
+						x="126"
+						y="86"
+						invocationOrder="0"
+						asynchronous="false"
+						recache="false">
+					<steps xsi:type="be.nabu.libs.services.vm.step.Link"
+							disabled="false"
+							id="d034a459ed034c46a056e53ae9dae8cf"
+							mask="false"
+							optional="false"
+							fixedValue="false">
+						<from>totp/key</from>
+						<to>key</to>
+					</steps>
+				</steps>
+				<steps xsi:type="be.nabu.libs.services.vm.step.Link"
+						disabled="false"
+						id="1a34d37e1f1a4539bd157d5e62a596fb"
+						mask="false"
+						optional="false"
+						fixedValue="false">
+					<from>result4ee1a62286b8475d90c13cae8ba2b0cc/otp</from>
+					<to>otp</to>
+				</steps>
+			</steps>
+			<steps xsi:type="be.nabu.libs.services.vm.step.Sequence"
+					comment="We found a match!"
+					disabled="false"
+					id="282dfd62013b4ed5826908252122bd3d"
+					label="otp == input/credentials/password"
+					lineNumber="7">
+				<steps xsi:type="be.nabu.libs.services.vm.step.Map"
+						comment="Map token"
+						disabled="false"
+						id="2bc68193a0e04c608c0ac870982991f2"
+						lineNumber="8">
+					<steps xsi:type="be.nabu.libs.services.vm.step.Link"
+							disabled="false"
+							id="016f723657a24e5092b75223b69b55cb"
+							mask="false"
+							optional="false"
+							fixedValue="false">
+						<from>token</from>
+						<to>output/token</to>
+					</steps>
+				</steps>
+				<steps xsi:type="be.nabu.libs.services.vm.step.Break"
+						disabled="false"
+						id="bcaa8c6c48ca4aa18c58046028c0b731"
+						lineNumber="9">
+					<count>4</count>
+				</steps>
+			</steps>
+			<query>totps</query>
+		</steps>
+	</steps>
+</sequence>

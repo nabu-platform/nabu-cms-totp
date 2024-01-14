@@ -1,0 +1,7 @@
+<structure interface="be.nabu.eai.authentication.api.TypedAuthenticator.authenticate" name="pipeline">
+    <structure name="input"/>
+    <structure name="output"/>
+    <structure collectionName="userTotps" definition="nabu.cms.totp.crud.userTotp.types.output" maxOccurs="unbounded" minOccurs="0" name="totps"/>
+    <structure definition="be.nabu.libs.authentication.api.Token" minOccurs="0" name="token"/>
+    <field minOccurs="0" name="otp" type="java.lang.String"/>
+</structure>

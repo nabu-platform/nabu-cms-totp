@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<crud>
+    <allowHeaderAsQueryParameter>true</allowHeaderAsQueryParameter>
+    <broadcastCreate>false</broadcastCreate>
+    <broadcastUpdate>false</broadcastUpdate>
+    <coreType>nabu.cms.totp.database.types.userTotpLog</coreType>
+    <createPermission>totp.manage</createPermission>
+    <createRole>$user</createRole>
+    <deletePermission>totp.manage</deletePermission>
+    <deleteRole>$user</deleteRole>
+    <filters>
+        <caseInsensitive>false</caseInsensitive>
+        <key>userTotpId</key>
+        <operator>=</operator>
+        <or>false</or>
+        <input>true</input>
+        <vary>false</vary>
+    </filters>
+    <getPermission>totp.list</getPermission>
+    <hooks>false</hooks>
+    <listPermission>totp.list</listPermission>
+    <listRole>$user</listRole>
+    <provider>nabu.services.crud.provider.basic.provider</provider>
+    <restLimitToUser>true</restLimitToUser>
+    <securityContextField>userTotpId</securityContextField>
+    <securityContextFieldPrefix>userTotp</securityContextFieldPrefix>
+    <updatePermission>totp.manage</updatePermission>
+    <updateRole>$user</updateRole>
+    <useAsAuthorizationServiceContext>false</useAsAuthorizationServiceContext>
+    <useExplicitLanguage>false</useExplicitLanguage>
+    <useGlobalPermissionContext>false</useGlobalPermissionContext>
+    <useLanguage>false</useLanguage>
+    <useListOutputForCreate>true</useListOutputForCreate>
+    <useListOutputForUpdate>true</useListOutputForUpdate>
+    <useProjectAsPermissionContext>false</useProjectAsPermissionContext>
+    <useServiceContextAsPermissionContext>false</useServiceContextAsPermissionContext>
+    <useWebApplicationAsPermissionContext>false</useWebApplicationAsPermissionContext>
+</crud>

@@ -1,0 +1,79 @@
+<sequence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		disabled="false"
+		id="b3e4e85f015d4b758d0a01edc47aac81"
+		lineNumber="1">
+	<steps xsi:type="be.nabu.libs.services.vm.step.Map"
+			disabled="false"
+			id="fa5da27441f843e7a453e3617d6ac4a2"
+			lineNumber="2">
+		<steps xsi:type="be.nabu.libs.services.vm.step.Invoke"
+				disabled="false"
+				id="14d93ae9f7714d419962c2a73da5ed69"
+				serviceId="nabu.cms.core.services.user.getCurrent"
+				resultName="resultacc74f0d5c80487f856c9d55b8e18bed"
+				temporaryMapping="true"
+				x="9"
+				y="79"
+				invocationOrder="0"
+				asynchronous="false"
+				recache="false">
+		</steps>
+		<steps xsi:type="be.nabu.libs.services.vm.step.Link"
+				disabled="false"
+				id="08ac3f88e19d452db6c9756cd47a2303"
+				mask="false"
+				optional="false"
+				fixedValue="false">
+			<from>resultacc74f0d5c80487f856c9d55b8e18bed/current</from>
+			<to>user</to>
+		</steps>
+	</steps>
+	<steps xsi:type="be.nabu.libs.services.vm.step.Map"
+			disabled="false"
+			id="3b4f0d1fcc744adb99a413d981236db5"
+			label="user"
+			lineNumber="3">
+		<steps xsi:type="be.nabu.libs.services.vm.step.Invoke"
+				disabled="false"
+				id="5e35ec2c8b0b49b8957c78d304df267a"
+				serviceId="nabu.cms.totp.crud.userTotp.services.list"
+				resultName="resultdbe8069c42344fcb8471f004833dd3c3"
+				temporaryMapping="true"
+				x="247"
+				y="89"
+				invocationOrder="1"
+				asynchronous="false"
+				recache="false">
+			<steps xsi:type="be.nabu.libs.services.vm.step.Link"
+					disabled="false"
+					id="2af0fe94ab66424bb009011f45156ffc"
+					mask="false"
+					optional="false"
+					fixedValue="false">
+				<from>user/id</from>
+				<to>filter/userId[0]</to>
+			</steps>
+			<steps xsi:type="be.nabu.libs.services.vm.step.Link"
+					disabled="false"
+					id="63d97e6cd21c41c391ddca789022ff05"
+					mask="false"
+					optional="false"
+					fixedValue="false">
+				<from>resultf71b203a260d45deba645df7d8d25b4d/date</from>
+				<to>filter/activeAt</to>
+			</steps>
+		</steps>
+		<steps xsi:type="be.nabu.libs.services.vm.step.Invoke"
+				disabled="false"
+				id="5d43c8befe624e26931c2b57931856c6"
+				serviceId="nabu.utils.Date.now"
+				resultName="resultf71b203a260d45deba645df7d8d25b4d"
+				temporaryMapping="true"
+				x="92"
+				y="447"
+				invocationOrder="0"
+				asynchronous="false"
+				recache="false">
+		</steps>
+	</steps>
+</sequence>

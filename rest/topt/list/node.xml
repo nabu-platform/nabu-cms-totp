@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<node artifactManager="be.nabu.eai.module.rest.provider.RESTServiceManager" created="2024-01-14T13:32:12.477+01:00" lastModified="2024-01-14T13:39:26.828+01:00" leaf="true" version="5">
+    <environmentId>apollo</environmentId>
+    <hidden>false</hidden>
+    <locked>false</locked>
+    <properties/>
+    <references>nabu.cms.totp.crud.userTotp.services.list</references>
+    <references>nabu.utils.Date.now</references>
+    <references>nabu.cms.core.services.user.getCurrent</references>
+    <references>nabu.cms.totp.crud.userTotp.types.outputList</references>
+    <references>nabu.cms.core.types.emodel.core.User</references>
+</node>
