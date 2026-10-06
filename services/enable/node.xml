@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<node artifactManager="be.nabu.eai.module.services.vm.VMServiceManager" created="2026-09-22T10:56:56.120+02:00" lastModified="2026-09-23T11:12:11.076+02:00" leaf="true" version="23">
+    <environmentId>ares</environmentId>
+    <hidden>false</hidden>
+    <locked>false</locked>
+    <properties/>
+    <references>java.util.Date</references>
+    <references>nabu.utils.Date.now</references>
+    <references>nabu.utils.Server.uuid</references>
+    <references>nabu.cms.core.crud.authenticationType.services.list</references>
+    <references>nabu.utils.Server.property</references>
+    <references>java.util.UUID</references>
+    <references>java.lang.Integer</references>
+    <references>nabu.cms.core.crud.userAuthenticationType.services.list</references>
+    <references>nabu.cms.core.crud.userAuthenticationType.services.create</references>
+    <references>nabu.cms.totp.crud.userTotp.services.list</references>
+    <references>nabu.utils.List.size</references>
+    <references>nabu.utils.Lock.lock</references>
+    <references>nabu.cms.totp.crud.userTotp.types.output</references>
+    <references>nabu.cms.core.crud.userAuthenticationType.types.output</references>
+    <references>nabu.cms.core.crud.authenticationType.types.output</references>
+    <references>nabu.utils.Security.configurationDecrypt</references>
+    <references>java.lang.Boolean</references>
+    <references>nabu.cms.core.crud.authenticationType.services.create</references>
+    <references>java.lang.String</references>
+    <references>nabu.utils.Totp.otp</references>
+    <references>nabu.cms.totp.crud.userTotp.services.update</references>
+    <references>nabu.utils.Lock.unlock</references>
+    <references>nabu.utils.Date.incrementDuration</references>
+</node>

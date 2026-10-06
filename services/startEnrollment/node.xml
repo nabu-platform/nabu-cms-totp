@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<node artifactManager="be.nabu.eai.module.services.vm.VMServiceManager" created="2026-09-22T10:56:54.822+02:00" lastModified="2026-09-22T14:28:55.656+02:00" leaf="true" version="15">
+    <environmentId>ares</environmentId>
+    <hidden>false</hidden>
+    <locked>false</locked>
+    <properties/>
+    <references>nabu.utils.Security.configurationEncrypt</references>
+    <references>java.util.Date</references>
+    <references>nabu.cms.core.crud.user.services.get</references>
+    <references>nabu.utils.Date.now</references>
+    <references>nabu.utils.Server.uuid</references>
+    <references>nabu.utils.Server.property</references>
+    <references>nabu.utils.Uri.encodeUriComponent</references>
+    <references>java.util.UUID</references>
+    <references>nabu.cms.totp.crud.userTotp.services.create</references>
+    <references>java.lang.Integer</references>
+    <references>nabu.cms.totp.crud.userTotp.services.list</references>
+    <references>nabu.utils.List.size</references>
+    <references>nabu.cms.totp.crud.userTotp.types.output</references>
+    <references>nabu.cms.core.crud.user.types.output</references>
+    <references>nabu.utils.Totp.newKey</references>
+    <references>java.lang.String</references>
+</node>

@@ -1,0 +1,24 @@
+<structure name="pipeline">
+	<structure name="input">
+		<field minOccurs="0" name="connectionId" type="java.lang.String"/>
+		<field name="userId" type="java.util.UUID"/>
+		<field minOccurs="0" name="name" type="java.lang.String"/>
+	</structure>
+	<structure name="output">
+		<field name="id" type="java.util.UUID"/>
+		<field name="uri" secret="true" type="java.lang.String"/>
+	</structure>
+	<structure definition="nabu.cms.core.crud.user.types.output" minOccurs="0" name="user"/>
+	<field minOccurs="0" name="issuer" type="java.lang.String"/>
+	<field minOccurs="0" name="key" secret="true" type="java.lang.String"/>
+	<field minOccurs="0" name="encryptedKey" secret="true" type="java.lang.String"/>
+	<field minOccurs="0" name="encodedIssuer" type="java.lang.String"/>
+	<field minOccurs="0" name="accountLabel" type="java.lang.String"/>
+	<field minOccurs="0" name="encodedAccount" type="java.lang.String"/>
+	<field minOccurs="0" name="created" timezone="UTC" type="java.util.Date"/>
+	<field minOccurs="0" name="id" type="java.util.UUID"/>
+	<field minOccurs="0" name="maximumActiveTotps" type="java.lang.Integer"/>
+	<structure definition="nabu.cms.totp.crud.userTotp.types.output" maxOccurs="unbounded" minOccurs="0" name="activeTotps"/>
+	<field minOccurs="0" name="activeTotpCount" type="java.lang.Integer"/>
+	<field minOccurs="0" name="activeAt" timezone="UTC" type="java.util.Date"/>
+</structure>

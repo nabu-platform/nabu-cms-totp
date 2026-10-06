@@ -1,0 +1,449 @@
+<sequence id="f4ddf36e6ce64d3d9980e4e082f2be1c">
+	<map id="2afdf078cce342488a338d7661ea3719">
+		<invoke id="f3d7a5ca07dd47e183ee042451632d6a"
+			resultName="result11a8db2b1a4b4c04a03f9ab324d4e011"
+			serviceId="nabu.utils.Date.now"
+			x="25"
+			y="25">
+		</invoke>
+		<link id="df857197e9d74ee8947d222382481857">
+			<from>result11a8db2b1a4b4c04a03f9ab324d4e011/date</from>
+			<to>now</to>
+		</link>
+		<link id="33ebf679cfcb425285a1f58cca14e2f6"
+			fixedValue="true">
+			<from>false</from>
+			<to>output/enabled</to>
+		</link>
+	</map>
+	<map id="e4c4dfc386f7479bad003832675a1232">
+		<invoke id="6860bd822a8a49b2be364aeedfb14860"
+			resultName="result12a8db2b1a4b4c04a03f9ab324d4e012"
+			serviceId="nabu.utils.Date.incrementDuration"
+			x="25"
+			y="25">
+			<link id="1ded576d83ae4b93a8be60a4a8884e39">
+				<from>now</from>
+				<to>start</to>
+			</link>
+			<link id="5da9ec07f94043009c35a96efc87d511"
+				fixedValue="true">
+				<from>PT10M</from>
+				<to>duration</to>
+			</link>
+			<link id="bd5bf7a0a027406fa4c82251a7f1a79f"
+				fixedValue="true">
+				<from>-1</from>
+				<to>times</to>
+			</link>
+		</invoke>
+		<link id="b03ee50230644df0b1893f7e32b5086d">
+			<from>result12a8db2b1a4b4c04a03f9ab324d4e012/date</from>
+			<to>threshold</to>
+		</link>
+	</map>
+	<map id="9459bc6ed22749bb8087d4b65ea5caaa">
+		<invoke id="9cc4925bfc5e4d9b88456b00b9fa725d"
+			resultName="resultAuthenticationType"
+			serviceId="nabu.cms.core.crud.authenticationType.services.list"
+			x="25"
+			y="25">
+			<link id="0d1c9768a2dc4112939f2cf658b7160c"
+				fixedValue="true">
+				<from>totp</from>
+				<to>filter/name[0]</to>
+			</link>
+			<link id="eb10f30a21ea499485ba35e0b3d7f2e8"
+				fixedValue="true">
+				<from>challenge</from>
+				<to>filter/category[0]</to>
+			</link>
+			<link id="f683655003784336847fa4c8ae8cf686"
+				fixedValue="true">
+				<from>1</from>
+				<to>limit</to>
+			</link>
+			<link id="88401f4a2db8403aa878a164892dbca2">
+				<from>input/connectionId</from>
+				<to>connectionId</to>
+			</link>
+		</invoke>
+		<link id="53584089f3f94bfdb27f0272686a5002">
+			<from>resultAuthenticationType/results[0]</from>
+			<to>authenticationType</to>
+		</link>
+	</map>
+	<sequence id="c18f10fccad949cc8d7541de1eccc022"
+		comment="Ensure the shared TOTP authentication type exists exactly once"
+		label="authenticationType == null"
+		scopeDefaultTransaction="true"
+		synchronized="true">
+		<map id="19f542dbf37f414d926ab7a245ccb402">
+			<invoke id="a0263fea4159437e884017c826af3849"
+				resultName="resultAuthenticationTypeLocked"
+				serviceId="nabu.cms.core.crud.authenticationType.services.list"
+				x="25"
+				y="25">
+				<link id="c0c2650e4a3b4dee93a312af936f5591"
+					fixedValue="true">
+					<from>totp</from>
+					<to>filter/name[0]</to>
+				</link>
+				<link id="c2567ad849ab44979934477009a6fb77"
+					fixedValue="true">
+					<from>challenge</from>
+					<to>filter/category[0]</to>
+				</link>
+				<link id="3c54f50a29554736a2316cea1e4c5269"
+					fixedValue="true">
+					<from>1</from>
+					<to>limit</to>
+				</link>
+				<link id="3b5de44aa24f47ddb6dd29199102df89">
+					<from>input/connectionId</from>
+					<to>connectionId</to>
+				</link>
+			</invoke>
+			<link id="da3cbf345c254699ad247c4d6e89fda6">
+				<from>resultAuthenticationTypeLocked/results[0]</from>
+				<to>authenticationType</to>
+			</link>
+		</map>
+		<map id="a296642ab84943609a0cee5f0f86e17f"
+			label="authenticationType == null">
+			<invoke id="a907768748a142c0b7ccd450f34529c2"
+				resultName="resultAuthenticationTypeId"
+				serviceId="nabu.utils.Server.uuid"
+				x="25"
+				y="25">
+			</invoke>
+			<invoke id="c1644e3eea3a46d59e55fcda3019ed88"
+				invocationOrder="1"
+				resultName="resultCreateAuthenticationType"
+				serviceId="nabu.cms.core.crud.authenticationType.services.create"
+				x="275"
+				y="110">
+				<link id="93651548248b4e50862c10f910f735cf">
+					<from>resultAuthenticationTypeId/uuid</from>
+					<to>id</to>
+				</link>
+				<link id="b4406e7490884cafbc57dd3804267d7e">
+					<from>now</from>
+					<to>instance/created</to>
+				</link>
+				<link id="70c8bd9fa95c46bcb45f6235b489eb30">
+					<from>now</from>
+					<to>instance/modified</to>
+				</link>
+				<link id="04e52e85e6f541fe9997b7e395cf8e25"
+					fixedValue="true">
+					<from>totp</from>
+					<to>instance/name</to>
+				</link>
+				<link id="a743b386ad794478910cdebeb9536d84"
+					fixedValue="true">
+					<from>challenge</from>
+					<to>instance/category</to>
+				</link>
+				<link id="439fdc9f5cf241d99f628ead89f47fbe"
+					fixedValue="true">
+					<from>nabu.cms.totp.providers.authenticator</from>
+					<to>instance/authenticationServiceId</to>
+				</link>
+				<link id="52df0327334a41928f23b85e6cf222ce">
+					<from>input/connectionId</from>
+					<to>connectionId</to>
+				</link>
+			</invoke>
+			<link id="d937f9438b3d45db811d36d10c3b5359">
+				<from>resultCreateAuthenticationType/created</from>
+				<to>authenticationType</to>
+			</link>
+		</map>
+	</sequence>
+	<map id="a827f18947164eb2800ef95eb077c82c">
+		<invoke id="c16bd5a09c284a77a35b800dfec682ef"
+			resultName="resultAssignments"
+			serviceId="nabu.cms.core.crud.userAuthenticationType.services.list"
+			x="25"
+			y="25">
+			<link id="8d18548009934dac9546787f0b8d285b">
+				<from>input/userId</from>
+				<to>filter/userId[0]</to>
+			</link>
+			<link id="b293fed75bb74042bd55b10bc362a8f3">
+				<from>authenticationType/id</from>
+				<to>filter/authenticationTypeId[0]</to>
+			</link>
+			<link id="06641b3373a94bcfa953eb140fd1475d"
+				fixedValue="true">
+				<from>1</from>
+				<to>limit</to>
+			</link>
+			<link id="e393b844213c4fc7b4fa085d92b493bd">
+				<from>input/connectionId</from>
+				<to>connectionId</to>
+			</link>
+		</invoke>
+		<link id="fcde7eb2122643e2867297c9bcd7e16a">
+			<from>resultAssignments/results</from>
+			<to>assignments</to>
+		</link>
+	</map>
+	<map id="0518c539a54a4df7abc41cf05787f427">
+		<invoke id="419e203d76a543ef827a8aeafa68b328"
+			resultName="result13a8db2b1a4b4c04a03f9ab324d4e013"
+			serviceId="nabu.cms.totp.crud.userTotp.services.list"
+			x="25"
+			y="25">
+			<link id="c887c20a1a06479f9bfa2c653fda11a2">
+				<from>input/userId</from>
+				<to>filter/userId[0]</to>
+			</link>
+			<link id="524e7dabd8d248fa9d3e56c6e2356112">
+				<from>input/connectionId</from>
+				<to>connectionId</to>
+			</link>
+		</invoke>
+		<link id="bcdfec4c1e54410f838cdde5d11000f9">
+			<from>result13a8db2b1a4b4c04a03f9ab324d4e013/results</from>
+			<to>pending</to>
+		</link>
+	</map>
+	<for id="f3210ac2fcb5485e8b094f6083526f65"
+		query="pending"
+		variable="candidate">
+		<sequence id="00c857035b7f41b696591229070d5db7"
+			label="candidate/started == null &amp;&amp; candidate/stopped == null &amp;&amp; candidate/created &gt;= threshold">
+			<map id="4b7c07e928a749a288b0cb8a80be1d50">
+				<invoke id="43f0e6aa3a0b45d4910dcfe549427d79"
+					resultName="result14a8db2b1a4b4c04a03f9ab324d4e014"
+					serviceId="nabu.utils.Security.configurationDecrypt"
+					x="25"
+					y="25">
+					<link id="f6b95a41e5f54a6e8a4e019a037bebe6">
+						<from>candidate/key</from>
+						<to>encrypted</to>
+					</link>
+				</invoke>
+				<link id="ab7edabf61874a35901233451d1d8b3b">
+					<from>result14a8db2b1a4b4c04a03f9ab324d4e014/decrypted</from>
+					<to>decryptedKey</to>
+				</link>
+			</map>
+			<map id="bf2b0e28cac64061897af9d5524ddad2">
+				<invoke id="641dcfb5aa364942bf467b1fd2018ebd"
+					resultName="result15a8db2b1a4b4c04a03f9ab324d4e015"
+					serviceId="nabu.utils.Totp.otp"
+					x="25"
+					y="25">
+					<link id="d7f79c7fc4684a86864f0fb7f26f15c6">
+						<from>decryptedKey</from>
+						<to>key</to>
+					</link>
+				</invoke>
+				<link id="322d4548620c43d5a62a92f77fdae11b">
+					<from>result15a8db2b1a4b4c04a03f9ab324d4e015/otp</from>
+					<to>expectedCode</to>
+				</link>
+			</map>
+			<sequence id="cc324a700dac443eba0ace9284343d68"
+				label="expectedCode == input/code">
+				<map id="f5447ef934fc43d793727a7e8cd8f339">
+					<invoke id="6ce421a12fcf455394c1af1e010e445d"
+						resultName="resultUserTotpLock"
+						serviceId="nabu.utils.Lock.lock"
+						x="25"
+						y="25">
+						<link id="6e2e3e40217a4167ac2f2d03101408a7"
+							fixedValue="true">
+							<from>="nabu.cms.totp.enable::" + input/userId</from>
+							<to>name</to>
+						</link>
+						<link id="a64ba09199bf434daedb47389af61dda"
+							fixedValue="true">
+							<from>false</from>
+							<to>local</to>
+						</link>
+					</invoke>
+				</map>
+				<sequence id="35943417f8ba44d58e5e70a1e915c79d">
+					<map id="cebd33c73a874cbd854e65b5d11549d9">
+						<invoke id="6000822707bc48e2a8af26f107d91f2d"
+							resultName="resultMaximumActiveTotps"
+							serviceId="nabu.utils.Server.property"
+							x="25"
+							y="25">
+							<link id="4523a17362684e60ab69bb3491f891ad"
+								fixedValue="true">
+								<from>nabu.cms.totp.maximumActiveTotps</from>
+								<to>key</to>
+							</link>
+							<link id="a3809b97e363408ba50111cb2b073145"
+								fixedValue="true">
+								<from>10</from>
+								<to>defaultValue</to>
+							</link>
+						</invoke>
+						<invoke id="d1a859e83e3e45ab873bac1ad644e35d"
+							resultName="resultActiveTotps"
+							serviceId="nabu.cms.totp.crud.userTotp.services.list"
+							x="25"
+							y="110">
+							<link id="889cbda77c3b48d19cd9e7ed75b5ff04">
+								<from>input/userId</from>
+								<to>filter/userId[0]</to>
+							</link>
+							<link id="bc0551f041e549fcaa39324c236a2698">
+								<from>now</from>
+								<to>filter/activeAt</to>
+							</link>
+							<link id="deb92d961bc443c290753ffd62e7ad07">
+								<from>input/connectionId</from>
+								<to>connectionId</to>
+							</link>
+						</invoke>
+						<link id="c05ae62d24004651874f7cf6685d3a04">
+							<from>resultMaximumActiveTotps/value</from>
+							<to>maximumActiveTotps</to>
+						</link>
+						<link id="313a27766c494a66a2ecd3f2c370c542">
+							<from>resultActiveTotps/results</from>
+							<to>activeTotps</to>
+						</link>
+					</map>
+					<map id="45f8e96ad11141618af502e13b7e04c7">
+						<invoke id="df684f8a1b6b427fae9ffbd3e0341991"
+							resultName="resultActiveTotpCount"
+							serviceId="nabu.utils.List.size"
+							x="25"
+							y="25">
+							<link id="2c4e82472a214153ac879cbc4137f03c">
+								<from>activeTotps</from>
+								<to>list</to>
+							</link>
+						</invoke>
+						<link id="5391822eb4ce48719fc29a45b8e5b199">
+							<from>resultActiveTotpCount/size</from>
+							<to>activeTotpCount</to>
+						</link>
+					</map>
+					<throw id="b52968d2a1754f49a5658b3e58345c5d"
+						code="TOTP-LIMIT-INVALID"
+						label="maximumActiveTotps == null || maximumActiveTotps &lt; 1"
+						message="The maximum active TOTP limit must be greater than zero"/>
+					<throw id="acddf2d949a54b248603b88a2740e70f"
+						code="TOTP-LIMIT-REACHED"
+						label="activeTotpCount &gt;= maximumActiveTotps"
+						message="The maximum number of active TOTP authenticators has been reached"/>
+					<map id="69e02e6c617244fea67168d337c31eef">
+						<invoke id="b98f4325a4a84e068183ff932a9709d0"
+							resultName="resultAssignmentId"
+							serviceId="nabu.utils.Server.uuid"
+							x="25"
+							y="25">
+						</invoke>
+						<link id="0aa790a2626142b0ab251cf68caddd76">
+							<from>resultAssignmentId/uuid</from>
+							<to>assignmentId</to>
+						</link>
+						<invoke id="eea094e7ff26477280d37a460820db64"
+							invocationOrder="1"
+							resultName="result16a8db2b1a4b4c04a03f9ab324d4e016"
+							serviceId="nabu.cms.totp.crud.userTotp.services.update"
+							x="275"
+							y="110">
+							<link id="14841e93609f4c0c93feb929bb6c366c">
+								<from>candidate/id</from>
+								<to>id</to>
+							</link>
+							<link id="41e54983d69946c8a8156a2309e03e12"
+								mask="true">
+								<from>candidate</from>
+								<to>instance</to>
+							</link>
+							<link id="9346b9f54648440ebd0dc06f36839ea2">
+								<from>now</from>
+								<to>instance/started</to>
+							</link>
+							<link id="641a5781a3dc4c6da9d6f026e21c729c">
+								<from>input/connectionId</from>
+								<to>connectionId</to>
+							</link>
+						</invoke>
+						<link id="00fc37dfed794de796381e21dcc5affb"
+							fixedValue="true">
+							<from>true</from>
+							<to>output/enabled</to>
+						</link>
+						<link id="5f22f936a5504bec99b05f42b58d583e">
+							<from>candidate/id</from>
+							<to>output/id</to>
+						</link>
+					</map>
+					<map id="01185a1ebb8042a8bf4726d2ef176d99"
+						label="!assignments">
+						<invoke id="9293b9f5b39f427089948c9ad06b0e20"
+							resultName="resultCreateAssignment"
+							serviceId="nabu.cms.core.crud.userAuthenticationType.services.create"
+							x="25"
+							y="25">
+							<link id="6600a4b115ec479189dba52aef1beaf2">
+								<from>assignmentId</from>
+								<to>id</to>
+							</link>
+							<link id="d8e7cece0b5f44f9845afb9fbe50048e">
+								<from>input/userId</from>
+								<to>instance/userId</to>
+							</link>
+							<link id="df7b43d598bd4981b2a9eb5dd9c64313">
+								<from>authenticationType/id</from>
+								<to>instance/authenticationTypeId</to>
+							</link>
+							<link id="301abfe8691c4441b00c1f8883f657c0">
+								<from>now</from>
+								<to>instance/created</to>
+							</link>
+							<link id="64a89f6fd3904fb5a0a469c776aa1ee1">
+								<from>now</from>
+								<to>instance/modified</to>
+							</link>
+							<link id="93bffd4ee9974e52b15e6230120ddc6e"
+								fixedValue="true">
+								<from>false</from>
+								<to>instance/forced</to>
+							</link>
+							<link id="4b73055e402a49cea845eb77a0d2738e">
+								<from>input/connectionId</from>
+								<to>connectionId</to>
+							</link>
+						</invoke>
+					</map>
+					<finally id="26c2a319b5bc47f7ad9092911d23dde8">
+						<map id="131f1270ab764362a060675e11dc6e57">
+							<invoke id="33bb82a70576450e843d39aaa4727404"
+								resultName="resultUserTotpUnlock"
+								serviceId="nabu.utils.Lock.unlock"
+								x="25"
+								y="25">
+								<link id="c928b828634d4934a5611bf8249fb825"
+									fixedValue="true">
+									<from>="nabu.cms.totp.enable::" + input/userId</from>
+									<to>name</to>
+								</link>
+								<link id="839a5060aa4f4359b1981983ee2821f3"
+									fixedValue="true">
+									<from>false</from>
+									<to>local</to>
+								</link>
+							</invoke>
+						</map>
+					</finally>
+				</sequence>
+				<break id="d8a78bba4860408c93d1156b265977be">
+					<count>2</count>
+				</break>
+			</sequence>
+		</sequence>
+	</for>
+</sequence>

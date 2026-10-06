@@ -1,0 +1,250 @@
+<sequence id="6d480a35f6684a8685fa9566e74cdbee">
+	<map id="c3102241ce9d4769ab2947d416f290e7">
+		<invoke id="3a810231d34649edbea89b08d7be0387"
+			resultName="result01a8db2b1a4b4c04a03f9ab324d4e001"
+			serviceId="nabu.cms.core.crud.user.services.get"
+			x="25"
+			y="25">
+			<link id="b33dc3862eb14d6680f6e7201c306cb9">
+				<from>input/userId</from>
+				<to>id</to>
+			</link>
+			<link id="b2a9213a185b47c483468e75bc96605d">
+				<from>input/connectionId</from>
+				<to>connectionId</to>
+			</link>
+		</invoke>
+		<link id="f186f8c5fd9446688a0ead12cf9ee686">
+			<from>result01a8db2b1a4b4c04a03f9ab324d4e001/result</from>
+			<to>user</to>
+		</link>
+	</map>
+	<throw id="fe24801041974439ae713739e8021243"
+		code="TOTP-USER-NOT-FOUND"
+		label="user == null"
+		message="The user does not exist"/>
+	<map id="14ccf78776e045328dfe3b0753f0d0ea">
+		<invoke id="bbf2f114acf14de3a1dd43d307d199fe"
+			resultName="resultMaximumActiveTotps"
+			serviceId="nabu.utils.Server.property"
+			x="25"
+			y="25">
+			<link id="dbc77ec1de314995aab04d2f59bb3112"
+				fixedValue="true">
+				<from>nabu.cms.totp.maximumActiveTotps</from>
+				<to>key</to>
+			</link>
+			<link id="20669b3428ca48f2a835b1f7089c16ff"
+				fixedValue="true">
+				<from>10</from>
+				<to>defaultValue</to>
+			</link>
+		</invoke>
+		<invoke id="9f2f6508451f442db0ba08987357622e"
+			resultName="resultActiveTotpsNow"
+			serviceId="nabu.utils.Date.now"
+			x="25"
+			y="110">
+		</invoke>
+		<link id="bc238537575b4b5a849594931a1385f5">
+			<from>resultMaximumActiveTotps/value</from>
+			<to>maximumActiveTotps</to>
+		</link>
+		<link id="9f987742ea6a42acb0f62ddc6a4121d6">
+			<from>resultActiveTotpsNow/date</from>
+			<to>activeAt</to>
+		</link>
+	</map>
+	<throw id="70436608e95e4d5a9eb545a952f11e0e"
+		code="TOTP-LIMIT-INVALID"
+		label="maximumActiveTotps == null || maximumActiveTotps &lt; 1"
+		message="The maximum active TOTP limit must be greater than zero"/>
+	<map id="d9f961ec37734981b0deba290171e81d">
+		<invoke id="949d0fd2cf9744f6b82f8f8cda3c080b"
+			resultName="resultActiveTotps"
+			serviceId="nabu.cms.totp.crud.userTotp.services.list"
+			x="25"
+			y="25">
+			<link id="c0b89edf2c2146479d0ec1d957f38ad3">
+				<from>input/userId</from>
+				<to>filter/userId[0]</to>
+			</link>
+			<link id="8f4433bc0c744758827fe7e324a68855">
+				<from>activeAt</from>
+				<to>filter/activeAt</to>
+			</link>
+			<link id="f596afefe17e4cd0b77bdb831c578766">
+				<from>maximumActiveTotps</from>
+				<to>limit</to>
+			</link>
+			<link id="7267e747585541d299caa1b5f9f05784">
+				<from>input/connectionId</from>
+				<to>connectionId</to>
+			</link>
+		</invoke>
+		<link id="59049b33a4b14b33ab9cc093b2eea38f">
+			<from>resultActiveTotps/results</from>
+			<to>activeTotps</to>
+		</link>
+	</map>
+	<map id="6883d398e8ae41deacf33b6f4f0f8d3c">
+		<invoke id="fb55c541c4194e31b9c7872bbb778142"
+			resultName="resultActiveTotpCount"
+			serviceId="nabu.utils.List.size"
+			x="25"
+			y="25">
+			<link id="a50634818271442fb62c381854bc843e">
+				<from>activeTotps</from>
+				<to>list</to>
+			</link>
+		</invoke>
+		<link id="b676771255174a359adbbdf1c9688787">
+			<from>resultActiveTotpCount/size</from>
+			<to>activeTotpCount</to>
+		</link>
+	</map>
+	<throw id="b2ee6c6955fd46458972e985ed1fa251"
+		code="TOTP-LIMIT-REACHED"
+		label="activeTotpCount &gt;= maximumActiveTotps"
+		message="The maximum number of active TOTP authenticators has been reached"/>
+	<map id="32432af0d4e84c668eb42179613f37e9">
+		<invoke id="27c3996a8baa4ba0bddaa4079752d845"
+			resultName="result02a8db2b1a4b4c04a03f9ab324d4e002"
+			serviceId="nabu.utils.Totp.newKey"
+			x="25"
+			y="25">
+		</invoke>
+		<invoke id="c6263e87967d4c1db985c5779e8fbdf1"
+			resultName="result03a8db2b1a4b4c04a03f9ab324d4e003"
+			serviceId="nabu.utils.Server.uuid"
+			x="25"
+			y="110">
+		</invoke>
+		<invoke id="5bda52600615404b8e16d4365d2d3257"
+			resultName="result04a8db2b1a4b4c04a03f9ab324d4e004"
+			serviceId="nabu.utils.Date.now"
+			x="25"
+			y="195">
+		</invoke>
+		<link id="9ae959d4ad874c4e9a076be7fba68f70"
+			fixedValue="true">
+			<from>Nabu</from>
+			<to>issuer</to>
+		</link>
+		<link id="ed6e0b98357941c3978ed12816470047">
+			<from>result02a8db2b1a4b4c04a03f9ab324d4e002/key</from>
+			<to>key</to>
+		</link>
+		<link id="e2d84f54171c4f7bb3a7807dffa85dec">
+			<from>result03a8db2b1a4b4c04a03f9ab324d4e003/uuid</from>
+			<to>id</to>
+		</link>
+		<link id="fa3390f811a24e9ab32490629ef6c7dd">
+			<from>result04a8db2b1a4b4c04a03f9ab324d4e004/date</from>
+			<to>created</to>
+		</link>
+	</map>
+	<map id="4a54b06fbd834f07b8d3bd519e50c03c">
+		<link id="aabcff844c1d419c95bd224378b7e076">
+			<from>user/alias</from>
+			<to>accountLabel</to>
+		</link>
+	</map>
+	<map id="ffcc93cb6cbe46d5bb5634e02b27a0d4"
+		label="input/name != null">
+		<link id="91d872f0b69c4a44a938ce21e73eeeaa"
+			fixedValue="true">
+			<from>=user/alias + " (" + input/name + ")"</from>
+			<to>accountLabel</to>
+		</link>
+	</map>
+	<map id="70b9845da85848b49705ccfbee37417d">
+		<invoke id="712c09c8699044fdb8a4c632e5a3ac42"
+			resultName="result05a8db2b1a4b4c04a03f9ab324d4e005"
+			serviceId="nabu.utils.Security.configurationEncrypt"
+			x="25"
+			y="25">
+			<link id="6cb272a42d5d4cc38b2684bf24a51663">
+				<from>key</from>
+				<to>data</to>
+			</link>
+		</invoke>
+		<invoke id="ec0446a3b6554448a9644ed02a0a71ed"
+			resultName="result06a8db2b1a4b4c04a03f9ab324d4e006"
+			serviceId="nabu.utils.Uri.encodeUriComponent"
+			x="25"
+			y="110">
+			<link id="b06a3972098741c29e845f4e1013f99e">
+				<from>issuer</from>
+				<to>component</to>
+			</link>
+		</invoke>
+		<invoke id="895dc88d9c1946adbf633c1f304bedce"
+			resultName="result07a8db2b1a4b4c04a03f9ab324d4e007"
+			serviceId="nabu.utils.Uri.encodeUriComponent"
+			x="25"
+			y="195">
+			<link id="03aaeb212317497f9789a8c05f4968e8">
+				<from>accountLabel</from>
+				<to>component</to>
+			</link>
+		</invoke>
+		<link id="c61c3bbf58ea49feb84b824b00e03646">
+			<from>result05a8db2b1a4b4c04a03f9ab324d4e005/encrypted</from>
+			<to>encryptedKey</to>
+		</link>
+		<link id="723337a6a7ec494fbe6774dec9644fea">
+			<from>result06a8db2b1a4b4c04a03f9ab324d4e006/component</from>
+			<to>encodedIssuer</to>
+		</link>
+		<link id="4fb6d0c09217419387ae306f1ca0919d">
+			<from>result07a8db2b1a4b4c04a03f9ab324d4e007/component</from>
+			<to>encodedAccount</to>
+		</link>
+	</map>
+	<throw id="ed5932e295fa4c9e812895a4c2f15b9f"
+		code="TOTP-ENCRYPTION-FAILED"
+		label="encryptedKey == null"
+		message="The TOTP key could not be encrypted"/>
+	<map id="275b0a1545da4b1982fbf4b76399a78f">
+		<invoke id="c65d40c77d7d4143bf9852c8919c5f50"
+			resultName="result08a8db2b1a4b4c04a03f9ab324d4e008"
+			serviceId="nabu.cms.totp.crud.userTotp.services.create"
+			x="25"
+			y="25">
+			<link id="4d8da46c9b914a4399ccb70b4752a34f">
+				<from>input/userId</from>
+				<to>contextId</to>
+			</link>
+			<link id="844050ab583f4379bcf7a16984be3a6b">
+				<from>input/connectionId</from>
+				<to>connectionId</to>
+			</link>
+			<link id="cd99acff3e494c95bb5e6b986375a93c">
+				<from>id</from>
+				<to>id</to>
+			</link>
+			<link id="1cec6b448a6c4c39806c6ae99a41cf8c">
+				<from>input/name</from>
+				<to>instance/name</to>
+			</link>
+			<link id="690f61a186564bc49f56aea97fa9ad6d">
+				<from>created</from>
+				<to>instance/created</to>
+			</link>
+			<link id="aebe780f34c4426da44042c7b42d04d6">
+				<from>encryptedKey</from>
+				<to>instance/key</to>
+			</link>
+		</invoke>
+		<link id="68c672b34d684f2d95f8a069f04deaf2">
+			<from>id</from>
+			<to>output/id</to>
+		</link>
+		<link id="7e95c409597e4ee1bc1e5f893dbf0534"
+			fixedValue="true">
+			<from>="otpauth://totp/" + encodedIssuer + ":" + encodedAccount + "?secret=" + key + "&amp;issuer=" + encodedIssuer</from>
+			<to>output/uri</to>
+		</link>
+	</map>
+</sequence>
